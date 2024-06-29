@@ -5,15 +5,16 @@
 
  * Required: 
 
- https://github.com/yt-dlp/yt-dlp
+    https://github.com/yt-dlp/yt-dlp
 
- https://www.python.org/downloads/
+    https://www.python.org/downloads/
 
- https://github.com/TomSchimansky/CustomTkinter
- 
+    https://github.com/TomSchimansky/CustomTkinter
+
 
  * Optional: 
- https://ffmpeg.org/download.html
+
+    https://ffmpeg.org/download.html
 
  You can enter the directories in the UI or Config.txt file. 
  
