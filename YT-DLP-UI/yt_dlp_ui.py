@@ -47,14 +47,23 @@ def toggle_debug():
     root.update_idletasks()
     root.geometry(f"{root.winfo_width()}x{root.winfo_reqheight()}")
 
-# Callback to update the output text widget
+# Update the output text widget
 def output_callback(line):
     output_text.insert(ctk.END, line)
     output_text.see(ctk.END)
 
-# Callback to show the status
+
 def status_callback(message, color):
     show_status(message, color)
+
+def paste_clipboard():
+    try:
+        clipboard_content = root.clipboard_get()
+        url_entry.delete(0, ctk.END)
+        url_entry.insert(0, clipboard_content)
+    except Exception as e:
+        status_callback("Error: Unable to paste from clipboard", "red")
+
 
 # Initialize the main window
 def init_main_window():
@@ -63,13 +72,18 @@ def init_main_window():
     root = ctk.CTk()
     root.title("yt-dlp GUI")
     root.resizable(width=True, height=True)
-    root.minsize(width=600, height=400)
+    root.minsize(width=400, height=160)
     root.grid_columnconfigure(1, weight=1)
     root.grid_rowconfigure(5, weight=1)
 
     # Create URL entry
-    create_label(root, "URL:", 0, 0, "e")
+    #create_label(root, "URL:", 0, 0, "e")
+    paste_button = ctk.CTkButton(root, text="Paste URL:", command=paste_clipboard, width=80)
+    paste_button.grid(row=0, column=0, padx=5, pady=5)
     url_entry = create_entry(root, 0, 1, 2)
+
+    #paste_button = ctk.CTkButton(root, text="Paste", command=paste_clipboard, width=50)
+    #paste_button.grid(row=0, column=2, padx=10, pady=5)
 
     # Create format options
     create_label(root, "Format:", 1, 0, "e")
@@ -95,9 +109,9 @@ def init_main_window():
     create_label(settings_frame, "Audio Quality:", 2, 0, "e")
     audio_quality_var = ctk.StringVar(value="default")
     audio_quality_menu = ctk.CTkOptionMenu(settings_frame, variable=audio_quality_var, values=["default", "192K", "256K", "320K"])
-    audio_quality_menu.grid(row=2, column=1, columnspan=2, padx=10, pady=5, sticky="we")
+    audio_quality_menu.grid(row=2, column=1, columnspan=2, padx=5, pady=5, sticky="we")
 
-    toggle_debug_button = ctk.CTkButton(settings_frame, text="Toggle Debug Window", command=toggle_debug)
+    toggle_debug_button = ctk.CTkButton(settings_frame, text="Toggle Debug Window", command=toggle_debug, fg_color="teal", hover_color="darkslategrey")
     toggle_debug_button.grid(row=3, column=0, columnspan=3, padx=10, pady=5, sticky="we")
     settings_frame.grid_remove()
 
@@ -107,12 +121,12 @@ def init_main_window():
     buttons_frame.grid_columnconfigure(1, weight=1)
     buttons_frame.grid_columnconfigure(2, weight=1)
     
-    create_button(buttons_frame, "Toggle Settings", toggle_settings, 0, 0)
+    create_button(buttons_frame, "Settings", toggle_settings, 0, 0)
     create_button(buttons_frame, "Save Config", save_config, 0, 1)
     create_button(buttons_frame, "Download", lambda: download_start(config, url_entry.get(), format_var.get(), audio_quality_var.get(), output_callback, status_callback), 0, 2)
 
     # Create output text widget
-    output_text = ctk.CTkTextbox(root, width=600, height=200)
+    output_text = ctk.CTkTextbox(root, width=600, height=100)
     output_text.grid(row=5, column=0, columnspan=3, padx=10, pady=10, sticky="nsew")
 
     # Create status button
@@ -123,12 +137,12 @@ def init_main_window():
 # Helper functions to create widgets
 def create_label(parent, text, row, column, sticky):
     label = ctk.CTkLabel(parent, text=text)
-    label.grid(row=row, column=column, padx=10, pady=5, sticky=sticky)
+    label.grid(row=row, column=column, padx=5, pady=5, sticky=sticky)
     return label
 
 def create_entry(parent, row, column, columnspan):
     entry = ctk.CTkEntry(parent, width=400)
-    entry.grid(row=row, column=column, columnspan=columnspan, padx=10, pady=5, sticky="we")
+    entry.grid(row=row, column=column, columnspan=columnspan, padx=5, pady=5, sticky="we")
     return entry
 
 def create_radiobutton(parent, text, variable, value, row, column, sticky, padx):
@@ -144,7 +158,7 @@ def create_frame(parent, row, column, columnspan):
 
 def create_button(parent, text, command, row, column):
     button = ctk.CTkButton(parent, text=text, command=command)
-    button.grid(row=row, column=column, padx=10, pady=5, sticky="ew")
+    button.grid(row=row, column=column, padx=5, pady=5, sticky="ew")
     return button
 
 # Main
