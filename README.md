@@ -1,7 +1,7 @@
 # YT-DLP-UI
  UI for yt-dlp.exe
 
- - Installation -
+ - Installation:
 
  You will need to install: 
  Python, ffmpeg, yt-dlp.exe
