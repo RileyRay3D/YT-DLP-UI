@@ -8,6 +8,7 @@
 
  https://ffmpeg.org/download.html
 
- You can enter the directories in the UI or Config.txt file
+ You can enter the directories in the UI or Config.txt file. 
+ 
  Note: the ffmpeg directory needs to be the bin folder in the extracted ffmpeg folder
 
