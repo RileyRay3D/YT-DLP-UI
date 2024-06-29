@@ -32,6 +32,7 @@ def save_config():
     config['yt_dlp_path'] = yt_dlp_path_entry.get()
     config['download_dir'] = download_dir_entry.get()
     config['ffmpeg_path'] = ffmpeg_path_entry.get()
+    config['commands'] = commands_entry.get()
     write_config(config_path, config)
     show_status("Success: Configurations saved successfully", "teal")
 
@@ -67,7 +68,7 @@ def paste_clipboard():
 
 # Initialize the main window
 def init_main_window():
-    global root, url_entry, format_var, download_dir_entry, yt_dlp_path_entry, ffmpeg_path_entry, audio_quality_var, settings_frame, buttons_frame, output_text, status_button
+    global root, url_entry, format_var, download_dir_entry, yt_dlp_path_entry, ffmpeg_path_entry, audio_quality_var, thumb_embed_var, commands_entry, settings_frame, buttons_frame, output_text, status_button
 
     root = ctk.CTk()
     root.title("yt-dlp GUI")
@@ -111,8 +112,19 @@ def init_main_window():
     audio_quality_menu = ctk.CTkOptionMenu(settings_frame, variable=audio_quality_var, values=["Auto (Best Availible)", "32K", "48K", "64K", "128K", "192K", "256K", "320K"])
     audio_quality_menu.grid(row=2, column=1, columnspan=2, padx=5, pady=5, sticky="we")
 
+    # Add the toggle checkbox for other stuff
+    thumb_embed_var = ctk.BooleanVar()
+    thumb_embed_checkbox = ctk.CTkCheckBox(settings_frame, text="thumbnails", variable=thumb_embed_var)
+    thumb_embed_checkbox.grid(row=3, column=1, columnspan=3, padx=10, pady=5, sticky="w")
+
+    # Custom Commands
+    create_label(settings_frame, "Commands:", 4, 0, "e")
+    commands_entry = create_entry(settings_frame, 4, 1, 2)
+    commands_entry.insert(0, config['commands'])
+
+    # TOGGLE DEBUG
     toggle_debug_button = ctk.CTkButton(settings_frame, text="Toggle Debug Window", command=toggle_debug, fg_color="teal", hover_color="darkslategrey")
-    toggle_debug_button.grid(row=3, column=0, columnspan=3, padx=10, pady=5, sticky="we")
+    toggle_debug_button.grid(row=5, column=0, columnspan=3, padx=10, pady=5, sticky="we")
     settings_frame.grid_remove()
 
     # Create buttons frame
@@ -123,7 +135,7 @@ def init_main_window():
     
     create_button(buttons_frame, "Settings", toggle_settings, 0, 0)
     create_button(buttons_frame, "Save Config", save_config, 0, 1)
-    create_button(buttons_frame, "Download", lambda: download_start(url_entry.get(), format_var.get(), audio_quality_var.get(), output_callback, status_callback, yt_dlp_path_entry, download_dir_entry, ffmpeg_path_entry), 0, 2)
+    create_button(buttons_frame, "Download", lambda: download_start(url_entry.get(), format_var.get(), audio_quality_var.get(), thumb_embed_var, commands_entry, output_callback, status_callback, yt_dlp_path_entry, download_dir_entry, ffmpeg_path_entry), 0, 2)
 
     # Create output text widget
     output_text = ctk.CTkTextbox(root, width=600, height=100)
