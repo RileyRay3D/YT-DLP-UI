@@ -107,8 +107,8 @@ def init_main_window():
     ffmpeg_path_entry.insert(0, config['ffmpeg_path'])
 
     create_label(settings_frame, "Audio Quality:", 2, 0, "e")
-    audio_quality_var = ctk.StringVar(value="default")
-    audio_quality_menu = ctk.CTkOptionMenu(settings_frame, variable=audio_quality_var, values=["default", "192K", "256K", "320K"])
+    audio_quality_var = ctk.StringVar(value="Auto (Best Availible)")
+    audio_quality_menu = ctk.CTkOptionMenu(settings_frame, variable=audio_quality_var, values=["Auto (Best Availible)", "32K", "48K", "64K","128K", "192K", "256K", "320K"])
     audio_quality_menu.grid(row=2, column=1, columnspan=2, padx=5, pady=5, sticky="we")
 
     toggle_debug_button = ctk.CTkButton(settings_frame, text="Toggle Debug Window", command=toggle_debug, fg_color="teal", hover_color="darkslategrey")

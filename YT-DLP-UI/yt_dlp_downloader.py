@@ -9,7 +9,7 @@ def get_yt_dlp_path(yt_dlp_path):
         yt_dlp_path = os.path.join(yt_dlp_path, "yt-dlp.exe")
     return yt_dlp_path
 
-# Function to read config file
+# Read config file
 def read_config(file_path):
     config = {}
     with open(file_path, 'r') as file:
@@ -18,7 +18,7 @@ def read_config(file_path):
             config[name] = value
     return config
 
-# Function to write config file
+# Write config file
 def write_config(file_path, config):
     with open(file_path, 'w') as file:
         for name, value in config.items():
@@ -55,7 +55,9 @@ def download_start(config, url, format_option, audio_quality, output_callback, s
         cmd = f'"{yt_dlp_path}" -o "{download_dir}/%(title)s.%(ext)s" {url}'
     elif format_option == "mp3":
         cmd = f'"{yt_dlp_path}" -x --audio-format mp3 --ffmpeg-location "{ffmpeg_path}" -o "{download_dir}/%(title)s.%(ext)s" {url}'
-        if audio_quality != "default":
+        if audio_quality == "Auto (Best Availible)":
+            cmd += f' --audio-quality 0'
+        elif audio_quality != "Auto":
             cmd += f' --audio-quality {audio_quality}'
 
     run_command(cmd, output_callback, status_callback)
