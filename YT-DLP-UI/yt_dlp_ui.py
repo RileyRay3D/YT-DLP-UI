@@ -108,7 +108,7 @@ def init_main_window():
 
     create_label(settings_frame, "Audio Quality:", 2, 0, "e")
     audio_quality_var = ctk.StringVar(value="Auto (Best Availible)")
-    audio_quality_menu = ctk.CTkOptionMenu(settings_frame, variable=audio_quality_var, values=["Auto (Best Availible)", "32K", "48K", "64K","128K", "192K", "256K", "320K"])
+    audio_quality_menu = ctk.CTkOptionMenu(settings_frame, variable=audio_quality_var, values=["Auto (Best Availible)", "32K", "48K", "64K", "128K", "192K", "256K", "320K"])
     audio_quality_menu.grid(row=2, column=1, columnspan=2, padx=5, pady=5, sticky="we")
 
     toggle_debug_button = ctk.CTkButton(settings_frame, text="Toggle Debug Window", command=toggle_debug, fg_color="teal", hover_color="darkslategrey")
@@ -123,7 +123,7 @@ def init_main_window():
     
     create_button(buttons_frame, "Settings", toggle_settings, 0, 0)
     create_button(buttons_frame, "Save Config", save_config, 0, 1)
-    create_button(buttons_frame, "Download", lambda: download_start(config, url_entry.get(), format_var.get(), audio_quality_var.get(), output_callback, status_callback), 0, 2)
+    create_button(buttons_frame, "Download", lambda: download_start(url_entry.get(), format_var.get(), audio_quality_var.get(), output_callback, status_callback, yt_dlp_path_entry, download_dir_entry, ffmpeg_path_entry), 0, 2)
 
     # Create output text widget
     output_text = ctk.CTkTextbox(root, width=600, height=100)
@@ -134,6 +134,8 @@ def init_main_window():
     status_button.grid(row=1, column=0, columnspan=3, padx=10, pady=5, sticky="ew")
     status_button.grid_remove()
 
+
+############################## HELPER FUNCTIONS #################################
 # Helper functions to create widgets
 def create_label(parent, text, row, column, sticky):
     label = ctk.CTkLabel(parent, text=text)

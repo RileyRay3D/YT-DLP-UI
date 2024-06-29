@@ -41,14 +41,14 @@ def run_command(cmd, output_callback, status_callback):
 
     threading.Thread(target=command_thread).start()
 
-def download_start(config, url, format_option, audio_quality, output_callback, status_callback):
+def download_start(url, format_option, audio_quality, output_callback, status_callback, yt_dlp_path_entry, download_dir_entry, ffmpeg_path_entry):
     if not url:
         status_callback("Error: Please enter a URL", "red")
         return
 
-    yt_dlp_path = get_yt_dlp_path(config['yt_dlp_path'])
-    download_dir = config['download_dir']
-    ffmpeg_path = config['ffmpeg_path']
+    yt_dlp_path = get_yt_dlp_path(yt_dlp_path_entry.get())
+    download_dir = download_dir_entry.get()
+    ffmpeg_path = ffmpeg_path_entry.get()
     os.makedirs(download_dir, exist_ok=True)
 
     if format_option == "mp4":
