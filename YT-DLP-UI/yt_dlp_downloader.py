@@ -3,6 +3,12 @@ import subprocess
 import os
 import threading
 
+def get_yt_dlp_path(yt_dlp_path):
+    # If the path is a directory, append yt-dlp.exe to it
+    if os.path.isdir(yt_dlp_path):
+        yt_dlp_path = os.path.join(yt_dlp_path, "yt-dlp.exe")
+    return yt_dlp_path
+
 # Function to read config file
 def read_config(file_path):
     config = {}
@@ -40,7 +46,7 @@ def download_start(config, url, format_option, audio_quality, output_callback, s
         status_callback("Error: Please enter a URL", "red")
         return
 
-    yt_dlp_path = config['yt_dlp_path']
+    yt_dlp_path = get_yt_dlp_path(config['yt_dlp_path'])
     download_dir = config['download_dir']
     ffmpeg_path = config['ffmpeg_path']
     os.makedirs(download_dir, exist_ok=True)

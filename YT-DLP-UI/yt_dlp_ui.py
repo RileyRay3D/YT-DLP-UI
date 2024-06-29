@@ -4,10 +4,10 @@ import os
 import threading
 from yt_dlp_downloader import read_config, write_config, download_start
 
-# Initialize a global variable for the timer
+# Initialize timer
 status_timer = None
 
-# Function to show status message and manage the timer
+# Show status message and manage the timer
 def show_status(message, color):
     global status_timer
     if status_timer is not None:
@@ -19,7 +19,6 @@ def show_status(message, color):
     status_timer = threading.Timer(10, hide_status)
     status_timer.start()
 
-# Function to hide status message
 def hide_status():
     global status_timer
     status_button.grid_remove()
@@ -28,7 +27,7 @@ def hide_status():
     root.geometry(f"{root.winfo_width()}x{root.winfo_reqheight()}")
     status_timer = None
 
-# Function to save configurations
+# Save configurations to config.txt
 def save_config():
     config['yt_dlp_path'] = yt_dlp_path_entry.get()
     config['download_dir'] = download_dir_entry.get()
