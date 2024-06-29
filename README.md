@@ -1,7 +1,7 @@
 # YT-DLP-UI
  UI for yt-dlp.exe
 
- - Installation:
+ ## Installation:
 
  * Required: 
  https://github.com/yt-dlp/yt-dlp
